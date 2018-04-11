@@ -104,10 +104,10 @@ public class FrontController
 	 }
 	 
 	 @PostMapping("/detect")
-	 public String detect(@RequestParam("maxfile") String output, @RequestParam("maxfile") String maxfile, @RequestParam("scratchdir") String scratchdir,ModelMap model)
+	 public String detect()
 	 {
-			
-		return "detect";
+		 System.exit(0);
+		 return "detect";
 		 
 	 }
 	 

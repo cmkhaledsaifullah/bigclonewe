@@ -18,38 +18,30 @@
 </head>
 <body>
 <div class="container-fluid">
-	<h1>Summary of <c:out value="${tool.name}"/></h1>
-	<hr>
-	<h2>Name of the Tool is <c:out value="${tool.name}"/></h2>
-	<h2>Description of the tool is <c:out value="${tool.description}"/></h2>
-	<h2>Path of the tool file is <c:forEach var="toolfilename" items="${tool.toolFile}">
-	<c:out value="${toolfilename}" />,
-	</c:forEach></h2>
-	<h2>Path of the tool runner file is ${tool.toolRunnerFile}</h2>
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Summary of <c:out value="${tool.name}"/></h1>
+			<hr>
+			<h2>Name of the Tool is <c:out value="${tool.name}"/></h2>
+			<h2>Description of the tool is <c:out value="${tool.description}"/></h2>
+			<h2>Path of the tool file is <c:forEach var="toolfilename" items="${tool.toolFile}">
+			<c:out value="${toolfilename}" />,
+			</c:forEach></h2>
+			<h2>Path of the tool runner file is ${tool.toolRunnerFile}</h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+		<p>Upon Clicking the Go To Next Step Button the present jar file will terminate and you will configure your tool and tool runner using interactive terminal and then run the part 2 jar. Please dont change the location of the tool runner file</p>
+		</div>
+	</div>
+	
 	
 	<div class="row">
 			<div class="col-md-12">
-				<form action="detect" method="post" onsubmit="return detectInfoValidate()">
-					<div class="form-group">					 
-						<label for="output">
-							Name of the Output File
-						</label>
-						<input type="Text" class="form-control" name="output" id="output">
-					</div>
-					<div class="form-group">					 
-						<label for="maxfile">
-							Insert the maximum number of file tool can use in a single iteration [Optional]
-						</label>
-						<input type="text" class="form-control" name="maxfile" id="maxfile">
-					</div>
-					<div class="form-group">					 
-						<label for="scratchdir">
-							Directory to be used as scratch space.  Default is system tmp directory [Optional]
-						</label>
-						<input type="text" class="form-control"name="scratchdir" id="scratchdir">
-					</div> 
+				<form action="detect" method="post" onsubmit="return detectInfoValidate()"> 
 					<button type="submit" value="Submit" class="btn btn-primary">
-						Detect Clone
+						Goto To Next Step
 					</button>
 				</form>
 			</div>
