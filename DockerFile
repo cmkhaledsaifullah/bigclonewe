@@ -1,0 +1,16 @@
+FROM openjdk:8u151-jdk-alpine3.7
+RUN mkdir /home/bigcloneeval
+ADD ./toolsdb /home/bigcloneeval/toolsdb
+ADD ./upload-dir /home/bigcloneeval/upload-dir
+ADD ./1.report /home/bigcloneeval/1.report
+ADD ./2.report /home/bigcloneeval/2.report
+ADD ./3.report /home/bigcloneeval/3.report
+ADD ./4.report /home/bigcloneeval/4.report
+RUN apk update && \
+	apk upgrade && \
+	apk add bash vim sudo
+ADD target/bigcloneeval.evaluation.war /home/bigcloneeval/bigcloneeval.evaluation.war
+EXPOSE 8080
+WORKDIR /home/bigcloneeval
+ADD ./bigclonebenchdb /home/bigcloneeval/bigclonebenchdb
+ENTRYPOINT ["/bin/bash"]
