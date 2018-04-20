@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="A Clone Detection tool ranking system">
+		<meta name="author" content="C M Khaled Saifullah">
+		
+		<link rel="stylesheet" href="/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/css/style.css">
+		<link rel='stylesheet' id='compiled.css-css' href='https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled.min.css?ver=4.5.0' type='text/css' media='all' />
+		<link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		
+		<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+		<script type="text/javascript" src="/js/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/scripts.js"></script>
+		<title>Evaluate Tool</title>
+	</head>
+		<body>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<h3>BigCloneEval Web Framework</h3>
+						<p>Its a web framework of BigCLoneEval Framework. Please fill up
+							the following field to evaluate your clone detection tool woth
+							respect to BigCloneBench Oracle. Thanks</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<form action="evaluationresult" method="post" onsubmit="return validateForm(this)" enctype="multipart/form-data">
+							<div class="form-group">
+								<label for="toolname"> Name of the Tool </label> 
+								<input type="Text" class="form-control" name="toolname" id="toolname">
+							</div>
+							<div class="form-group">
+								<label for="description"> Short Description of the tool </label>
+								<input type="text" class="form-control" name="description" id="description">
+							</div>
+							<div class="form-group">
+								<label for="toolFile"> Submit Clone Result </label>
+								<input type="file" class="form-control-file" name="toolFile" id="toolFile">
+								<p class="help-block">Please upload the clone result in the format of BigCloneBench. You can take help from khaledkucse/bigcloneeval:detection:latest image from docker hub.</p>
+							</div>
+							<div class="form-group">
+								<label for="output"> A file name to write evaluation report </label> 
+								<input type="text" class="form-control" name="output" id="output">
+							</div>
+							<div class="form-group">
+								<label for="simtype"> Similarity Type [Optional] </label>
+								<select class="form-control" name="simtype" id="simtype">
+									<option></option>
+									<option>both</option>
+									<option>line</option>
+									<option>token</option>
+									<option>avg</option>
+								</select>
+								<p class="help-block">How reference clone similarity should be	measured: (both/line/token/avg). Default both.</p>
+							</div>
+							<div class="form-group">
+								<label for="clonematcher"> Clone Matcher [Optional] </label> <input
+									type="text" class="form-control" name="clonematcher"
+									id="clonematcher">
+								<p class="help-block">Specify the clone matcher. See
+									documentation for configuration strings. Default is
+									coverage-matcher with 70% coverage threshold.</p>
+							</div>
+							<div class="form-group">
+								<label for="minsim"> Minimum Similarity [Optional] </label> <input
+									type="text" class="form-control" name="minsim" id="minsim">
+								<p class="help-block">Minimum clone similarity to evaluate
+									for. In range [0,100], must be a multiple of 5.</p>
+							</div>
+							<div class="form-group">
+								<label for="minline"> Minimum Line [Optional] </label> <input
+									type="text" class="form-control" name="minline" id="minline">
+								<p class="help-block">Adds a minimum clone size, in lines,
+									constraint to the reference clones.</p>
+							</div>
+							<div class="form-group">
+								<label for="maxline"> Maximum Line [Optional] </label> <input
+									type="text" class="form-control" name="maxline" id="maxline">
+								<p class="help-block">Adds a maximum clone size, in lines,
+									constraint to the reference clones.</p>
+							</div>
+							<div class="form-group">
+								<label for="minpretty"> Minimum Pretty-Printed Line
+									[Optional] </label> <input type="text" class="form-control"
+									name="minpretty" id="minpretty">
+								<p class="help-block">Adds a minimum clone size, in
+									pretty-printed lines, constraint to the reference clones.</p>
+							</div>
+							<div class="form-group">
+								<label for="maxpretty"> Maximum Pretty-Printed Line
+									[Optional] </label> <input type="text" class="form-control"
+									name="maxpretty" id="maxpretty">
+								<p class="help-block">Adds a maximum clone size, in
+									pretty-printed lines, constraint to the reference clones.</p>
+							</div>
+							<div class="form-group">
+								<label for="mintoken"> Minimum Token [Optional] </label> <input
+									type="text" class="form-control" name="mintoken" id="mintoken">
+								<p class="help-block">Adds a minimum clone size, in tokens,
+									constraint to the reference clones.</p>
+							</div>
+							<div class="form-group">
+								<label for="maxtoken"> Maximum Token [Optional] </label> <input
+									type="text" class="form-control" name="maxtoken" id="maxtoken">
+								<p class="help-block">Adds a maximum clone size, in tokens,
+									constraint to the reference clones.</p>
+							</div>
+							<div class="form-group">
+								<label for="minjudgement"> Minimum Judges [Optional] </label> <input
+									type="text" class="form-control" name="minjudgement"
+									id="minjudgement">
+								<p class="help-block">Adds a minimum judges constraint to the
+									reference clones.</p>
+							</div>
+							<div class="form-group">
+								<label for="mincon"> Minimum Confidence Value [Optional] </label>
+								<input type="text" class="form-control" name="mincon" id="mincon">
+								<p class="help-block">Adds a minimum confidence constraint to
+									the reference clones.</p>
+							</div>
+		
+							<button type="submit" value="Submit" class="btn btn-primary">
+								Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</body>
+</html>

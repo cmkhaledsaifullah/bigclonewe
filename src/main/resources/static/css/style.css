@@ -1,0 +1,21 @@
+.form-group label{
+	font-size: x-large;
+    font-weight: 600;
+}
+
+.help-block{
+	color: green;
+}
+
+.col-md-*{
+	margin-top:20px;
+}
+
+.best-yes
+{
+	background-color: coral;
+}
+
+.best-no
+{
+}
