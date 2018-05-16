@@ -1,4 +1,4 @@
-# BifCloneEvalWeb
+# BiGCloneEvalWeb
 This is the web framework of the previously published BigCloneEval standalone framework.
 
 The framework is composed of two microservices. 1. Detection  2. Evaluation
