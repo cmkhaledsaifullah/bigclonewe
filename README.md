@@ -1,10 +1,12 @@
-# BiGCloneEvalWeb
-This is the web framework of the previously published BigCloneEval standalone framework.
+# BigCloneWE
+This is the web based evaluation framework of the BigCloneBench. We adopt the evaluation strategy of BigCloneEval.
 
-The framework is composed of two microservices. 1. Detection  2. Evaluation
+The framework is composed of two stage. 1. Detection  2. Evaluation
 
-Detection microservice has two phase. To see the source code of 1st phase of detection, go to detection1 branch or go to detection2 branch. To see the code of evaluation microservice, go to evaluation branch.
+Detection stage has two phase. To see the source code of 1st phase of detection, go to detection1 branch or go to detection2 branch. To see the code of evaluation microservice, go to evaluation branch.
 
 Docker image are also created for the framework.
 
-Docker Image: https://hub.docker.com/r/khaledkucse/bigcloneeval/
+Docker Image: https://hub.docker.com/r/khaledkucse/bigclonewe/
+
+The instruction to use docker images for both stage are directed on branches.
