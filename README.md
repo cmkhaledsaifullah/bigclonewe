@@ -11,4 +11,4 @@ Docker Image: https://hub.docker.com/r/khaledkucse/bigclonewe/
 
 The instruction to use docker images for both stage are directed on branches.
 
-The evaluation phage is published as a website at http://bigclonewe.usask.ca.
+The evaluation phage is published as a website at https://bigclonewe.usask.ca.
