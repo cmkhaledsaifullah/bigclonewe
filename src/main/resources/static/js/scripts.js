@@ -28,3 +28,23 @@ function validateForm(scope) {
 	}
 
 }
+
+$(document).ready(function() {
+
+    var placeholder = 'This is a line \nthis should be a new line';
+    $('#cite').attr('value', placeholder);
+
+    $('#cite').focus(function(){
+        if($(this).val() === placeholder){
+            $(this).attr('value', '');
+        }
+    });
+
+    $('#cite').blur(function(){
+        if($(this).val() ===''){
+            $(this).attr('value', placeholder);
+        }
+    });
+});
+
+
