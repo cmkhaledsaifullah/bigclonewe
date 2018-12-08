@@ -2,7 +2,9 @@
 	font-size: x-large;
     font-weight: 600;
 }
-
+.navbar-brand{
+    font-size: xx-large !important;
+}
 .help-block{
 	color: green;
 }
@@ -18,4 +20,9 @@
 
 .best-no
 {
+}
+#isstore
+{
+	position: inherit;
+	opacity: inherit;
 }
