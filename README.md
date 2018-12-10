@@ -1,6 +1,6 @@
 # BigCloneWe: Evaluation
 
-The website devloped using the source code of this repository can be found at hhtps://bigclonewe.usask.ca
+The website devloped using the source code of this repository can be found at https://bigclonewe.usask.ca
 
 If you want to run the repository remotly then you have three ways to do that:
 
