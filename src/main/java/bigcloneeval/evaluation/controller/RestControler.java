@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RestControler {
 
-	 @GetMapping(value = "/cloneranking/api/image/carousel")
+	 @GetMapping(value = "/api/image/carousel")
 	    public ResponseEntity<InputStreamResource> getImage(@RequestParam("background") String background) throws IOException {
 
 	    	ClassPathResource imgFile;

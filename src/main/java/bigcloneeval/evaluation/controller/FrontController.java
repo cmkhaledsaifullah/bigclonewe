@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import bigcloneeval.evaluation.tasks.DeleteTool;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -26,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import bigcloneeval.evaluation.database.Tool;
 import bigcloneeval.evaluation.database.Tools;
+import bigcloneeval.evaluation.database.ToolReport;
 import bigcloneeval.evaluation.model.Ranking;
 import bigcloneeval.evaluation.model.ToolRankingEntry;
 import bigcloneeval.evaluation.service.CloneReportService;
@@ -53,7 +55,7 @@ public class FrontController
 	 
 	 
 	 
-	@GetMapping("/cloneranking/home")
+	@GetMapping("/")
 	 public String index(ModelMap map)
 	 {
 		/*
@@ -65,10 +67,19 @@ public class FrontController
 		}
 		ToolReport.init();
 		*/
+
 		List<Tool> tools = ListTools.getTools();
+		//for(Tool each_tool:tools)
+		//{
+		//	System.out.println(each_tool.getId());
+		//	System.out.println(each_tool.getName());
+		//}
+
+		//DeleteTool.deleteTool((long)9);
+		//DeleteTool.deleteTool((long)8);
 		
 		map.addAttribute("tools",tools);
-		
+
 		List<ToolRankingEntry> rankingAll = RankingService.getreports("All");
 		List<ToolRankingEntry> rankingInter = RankingService.getreports("Inter");
 		List<ToolRankingEntry> rankingIntra = RankingService.getreports("Intra");
@@ -83,6 +94,7 @@ public class FrontController
 		map.addAttribute("bestall", bestAll);
 		map.addAttribute("bestinter", bestInter);
 		map.addAttribute("bestintra", bestIntra);
+
 		
 		return "index";
 	 }
@@ -123,14 +135,17 @@ public class FrontController
 	
 	
 	@GetMapping("/evaluation")
-	 public String evaluationForm()
+	 public String evaluationForm(ModelMap map)
 	 {
+		 List<Tool> tools = ListTools.getTools();
+
+		 map.addAttribute("tools",tools);
 		 return "evaluate";
 	 }
 	
 	
 	@PostMapping("/evaluationresult")
-	 public String evaluation(@RequestParam("toolname") String toolname, @RequestParam("description") String tooldescription, @RequestParam("toolFile") MultipartFile toolfile, @RequestParam("output") String output,@RequestParam("simtype") String simtype,@RequestParam("clonematcher") String clonematcher,@RequestParam("minsim") String minsim,@RequestParam("minline") String minline,@RequestParam("maxline") String maxline,@RequestParam("minpretty") String minpretty,@RequestParam("maxpretty") String maxpretty,@RequestParam("mintoken") String mintoken,@RequestParam("maxtoken") String maxtoken,@RequestParam("minjudgement") String minjudgement,@RequestParam("mincon") String mincon,ModelMap model)
+	 public String evaluation(@RequestParam("toolname") String toolname,@RequestParam("author") String authorName, @RequestParam("description") String tooldescription,@RequestParam("homePageLink") String homePageLink,@RequestParam("cite") String cite, @RequestParam("toolFile") MultipartFile toolfile, @RequestParam("selData") String selectData,@RequestParam("othercloneclass") String otherscloneclass, @RequestParam("output") String output,@RequestParam("simtype") String simtype,@RequestParam("clonematcher") String clonematcher,@RequestParam("minsim") String minsim,@RequestParam("minline") String minline,@RequestParam("maxline") String maxline,@RequestParam("minpretty") String minpretty,@RequestParam("maxpretty") String maxpretty,@RequestParam("mintoken") String mintoken,@RequestParam("maxtoken") String maxtoken,@RequestParam("minjudgement") String minjudgement,@RequestParam("mincon") String mincon,ModelMap model)
 	 {
 		List<Tool> tools = ListTools.getTools();
 		
@@ -144,6 +159,8 @@ public class FrontController
 			System.out.println("Enter Clone result file");
 		else if(output.isEmpty())
 			System.out.println("Enter Output File Name");
+		else if(selectData.equals("Others") && otherscloneclass.isEmpty())
+				System.out.println("Enter the clone classes");
 		else
 		{
 			this.outputfileName = output;
@@ -158,11 +175,14 @@ public class FrontController
 				System.out.println("FAIL to upload " + Paths.get("upload-dir").toAbsolutePath()+"/"+toolfile.getOriginalFilename() + "!");
 			}
 			tool.setName(toolname);
+			tool.setAuthor(authorName);
 			tool.setDescription(tooldescription);
+			tool.setHomepagelink(homePageLink);
+			tool.setCitation(cite);
 
 			try 
 			{
-				long id = ce.executeRegisterTool(toolname, tooldescription);
+				long id = ce.executeRegisterTool(toolname, authorName,tooldescription,homePageLink,cite);
 				
 				if(id > 0)
 				{
@@ -195,6 +215,17 @@ public class FrontController
 		
 		
 		return "evaluationresult";
+	 }
+
+	 @GetMapping("/evaluationresult")
+	 public String test(ModelMap map)
+	 {
+		 List<Tool> tools = ListTools.getTools();
+		 map.addAttribute("tools",tools);
+		 String time = "2742 seconds";
+		 map.addAttribute("statement", time);
+		 map.addAttribute("candidatetool", tool);
+		 return "evaluationresult";
 	 }
 	
 	private String evaluatFunction(String id, String simtype, String matcher, String minline,String maxline,String mintoken, String maxtoken, String minpretty, String maxpretty, String minjudges, String mincon, String minsim, String output)
@@ -285,17 +316,17 @@ public class FrontController
 				 .body(file);
 		
 	 }
-	@GetMapping("/about")
-	public String aboutUs(ModelMap model)
+	@GetMapping("/submitReport")
+	public String submitReport(ModelMap model)
 	{
 		List<Tool> tools = ListTools.getTools();		
 		model.addAttribute("tools",tools);
-		return "aboutus";
+		return "submitreport";
 	}
 	
 	
 	@PostMapping("/reportSubmission")
-	 public String reportSubmission(@RequestParam("toolname") String toolname, @RequestParam("description") String tooldescription, @RequestParam("toolFile") MultipartFile toolfile,ModelMap model)
+	 public String reportSubmission(@RequestParam("toolname") String toolname,@RequestParam("author") String authorName, @RequestParam("description") String tooldescription,@RequestParam("downloadlink") String homePageLink,@RequestParam("cite") String cite, @RequestParam("toolFile") MultipartFile toolfile,ModelMap model)
 	 {
 		List<Tool> tools = ListTools.getTools();		
 		model.addAttribute("tools",tools);
@@ -309,12 +340,16 @@ public class FrontController
 		{
 			System.out.println("FAIL to upload " + Paths.get("upload-dir").toAbsolutePath()+File.separator+toolfile.getOriginalFilename() + "!");
 		}
-		tool.setName(toolname);
-		tool.setDescription(tooldescription);
-		
-		try 
+		 tool.setName(toolname);
+		 tool.setAuthor(authorName);
+		 tool.setDescription(tooldescription);
+		 tool.setHomepagelink(homePageLink);
+		 tool.setCitation(cite);
+
+
+		 try
 		{
-			long id = ce.executeRegisterTool(toolname, tooldescription);
+			long id = ce.executeRegisterTool(toolname,authorName, tooldescription,homePageLink,cite);
 			
 			if(id > 0)
 			{
@@ -338,7 +373,7 @@ public class FrontController
 			e.printStackTrace();
 		}
 		
-		return "redirect:/about";
+		return "redirect:/submitReport";
 	 }
 	
 	
