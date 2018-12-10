@@ -5,6 +5,9 @@ public class Tool {
 	private long id;
 	private String name;
 	private String description;
+	private String author;
+	private String homepagelink;
+	private String citation;
 	
 		
 	public Tool() {
@@ -23,6 +26,16 @@ public class Tool {
 		this.id = id;
 		this.name = name;
 		this.description = description;
+	}
+
+	public Tool(long id, String name, String author,String description, String homepagelink, String citation) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.author=author;
+		this.description = description;
+		this.homepagelink=homepagelink;
+		this.citation=citation;
 	}
 
 	public long getId() {
@@ -50,6 +63,30 @@ public class Tool {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getHomepagelink() {
+		return homepagelink;
+	}
+
+	public void setHomepagelink(String homepagelink) {
+		this.homepagelink = homepagelink;
+	}
+
+	public String getCitation() {
+		return citation;
+	}
+
+	public void setCitation(String citation) {
+		this.citation = citation;
 	}
 
 	@Override

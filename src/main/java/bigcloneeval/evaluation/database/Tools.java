@@ -30,7 +30,7 @@ public class Tools {
 	
 	public static void init() throws SQLException {
 		dropall();
-		String sql = "CREATE TABLE tools ( name character varying NOT NULL, description character varying NOT NULL, id identity NOT NULL);";
+		String sql = "CREATE TABLE tools ( name character varying NOT NULL,author character varying, description character varying,homepage character varying,cite character varying, id identity NOT NULL);";
 		Connection conn = ToolsDB.getConnection();
 		Statement stmt = conn.createStatement();
 		stmt.executeUpdate(sql);
@@ -59,12 +59,12 @@ public class Tools {
 	
 	public static List<Tool> getTools() throws SQLException {
 		List<Tool> retval = new LinkedList<Tool>();
-		String sql = "SELECT id, name, description FROM tools ORDER BY id";
+		String sql = "SELECT id, name,author, description,homepage,cite FROM tools ORDER BY id";
 		Connection conn = ToolsDB.getConnection();
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
 		while(rs.next()) {
-			retval.add(new Tool(rs.getLong(1), rs.getString(2), rs.getString(3)));
+			retval.add(new Tool(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
 		}
 		rs.close();
 		stmt.close();
@@ -74,12 +74,12 @@ public class Tools {
 	
 	public static Tool getTool(long id) throws SQLException {
 		Tool retval;
-		String sql = "SELECT id, name, description FROM tools WHERE id = " + id;
+		String sql = "SELECT id, name,author, description,homepage,cite FROM tools WHERE id = " + id;
 		Connection conn = ToolsDB.getConnection();
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery(sql);
 		if(rs.next()) {
-			retval = new Tool(rs.getLong(1), rs.getString(2), rs.getString(3));
+			retval = new Tool(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
 		} else {
 			retval = null;
 		}
@@ -89,13 +89,16 @@ public class Tools {
 		return retval;
 	}
 	
-	public static long addTool(String name, String description) throws SQLException {
+	public static long addTool(String name,String author, String description,String homePage,String cite) throws SQLException {
 	// Add Tool
-		String sql = "INSERT INTO tools (name, description) VALUES (?,?)";
+		String sql = "INSERT INTO tools (name, author,description,homepage,cite) VALUES (?,?,?,?,?)";
 		Connection conn = ToolsDB.getConnection();
 		PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		stmt.setString(1, name);
-		stmt.setString(2, description);
+		stmt.setString(2, author);
+		stmt.setString(3, description);
+		stmt.setString(4, homePage);
+		stmt.setString(5, cite);
 		stmt.executeUpdate();
 		ResultSet rs = stmt.getGeneratedKeys();
 		rs.next();
