@@ -33,11 +33,14 @@ public class CommandExecution
 		return 0;	
 	}
 	
-	public long executeRegisterTool(String toolName,String toolDescription) throws IOException, InterruptedException
+	public long executeRegisterTool(String toolName,String authorname,String toolDescription,String homepageLink,String cite) throws IOException, InterruptedException
 	{
-		String[] args = new String[2];
+		String[] args = new String[5];
 		args[0] = toolName;
-		args[1] = toolDescription;
+		args[1] = authorname;
+		args[2] = toolDescription;
+		args[3] = homepageLink;
+		args[4] = cite;
 		long id = RegisterTool.register(args);
 		return id;
 	}
