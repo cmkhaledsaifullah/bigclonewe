@@ -1,5 +1,23 @@
 # BigCloneWe: Evaluation
 
+The website devloped using the source code of this repository can be found at hhtps://bigclonewe.usask.ca
+
+If you want to run the repository remotly then you have three ways to do that:
+
+
+Way 1:
+Download the Source code by cloning the repository and run the MainApplication.java file.
+
+In the browser go to http://localhost:9057/
+
+
+Way 2:
+Download the jar file "bigcloneeval.evaluation.war" from the repository and then run the war file using following command:
+
+"java -jar bigcloneeval.evaluation.war"
+
+
+Way 3:
 Evaluation stage works as follows:
 
 1. Go to https://hub.docker.com/r/khaledkucse/bigclonewe/tags/ to see evaluation's docker image
@@ -9,7 +27,7 @@ Evaluation stage works as follows:
 5. Now write "java -jar bigcloneeval.evaluation.jar" to run the springboot application.
 6. Go to your web browser and navigate http://localhost:8080/cloneranking/home and you will get the interface you are looking for.
 
-For any query please an issue.
+For any query please create an issue.
 
 Thanks.
 
