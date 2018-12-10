@@ -171,12 +171,15 @@ public class EvaluateRecall {
 		
 		// Create Temporary Tool
 		String name = UUID.randomUUID().toString();
+		String author = UUID.randomUUID().toString();
 		String desc = UUID.randomUUID().toString();
+		String homepage = UUID.randomUUID().toString();
+		String cite = UUID.randomUUID().toString();
 		Long toolID = null;
 		
 		try {
 			// Create Tool
-			toolID = Tools.addTool(name, desc);
+			toolID = Tools.addTool(name,author, desc,homepage,cite);
 			
 			// Import Clones
 			System.out.println("Importing clones...");

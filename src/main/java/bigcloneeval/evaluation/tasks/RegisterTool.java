@@ -9,12 +9,14 @@ public class RegisterTool {
 	
 	
 	public static long register(String args[]) {
-			String desc = args[1];
+			String desc = args[2];
 			String name = args[0];
-			
+			String author = args[1];
+			String homepage = args[3];
+			String cite = args[4];
 			long id = -1;
 			try {
-				id = Tools.addTool(name, desc);
+				id = Tools.addTool(name,author, desc,homepage,cite);
 				System.out.println(id);
 			} catch (SQLException e) {
 				System.err.println("\tSome error occured with the database connection or interaction.");
